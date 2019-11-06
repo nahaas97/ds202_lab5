@@ -1,9 +1,12 @@
 ---
-title: "lab 5"
-author: "Nathan Haas"
+title: "DS 202: Lab 5"
+author: "Nathan Haas, Alex Beagle"
 date: "10/31/2019"
 output: html_document
 ---
+
+
+Processing the Data
 
 1.
 ```{r}
@@ -25,7 +28,6 @@ diabetes_reduced = diabetes
 diabetes_reduced$id = NULL
 diabetes_reduced$bp.2s = NULL
 diabetes_reduced$bp.2d = NULL
-
 ```
 
 
@@ -38,4 +40,72 @@ table(index2.na)
 ```
 
 
-5.If you look at the code for number 4, we made a variable called index2.na. We then used the table function and found that all of the na values were gotten rid of because the only ouputs from the table function were "false".
+5. If you look at the code for number 4, we made a variable called index2.na. We then used the table function and found that all of the NA values were gotten rid of because the only ouputs from the table function were "false".
+
+
+Exploring and Transforming the Data
+
+6.
+```{r}
+library(ggplot2)
+ggplot(diabetes_clean, aes(x=glyhb)) + geom_histogram() + labs(title="Spread of glyhb variable") #This graph was created to illustrate the skewness of the glyhb variable.
+
+#We can remedy the variable 'glyhb' being right skewed by creating a new variable that is the log of glyhb. While this will fix the skewness problem, the variable will not be able to be interpretted as easily as beforehand, which is one of the downfalls. While this is the case, it is worth transforming the variable in order to visualize the variable and the effect it has on the rest of the dataset.
+```
+
+
+7.
+```{r}
+diabetes_clean$glyhb_star = log(diabetes_clean$glyhb)
+ggplot(diabetes_clean, aes(x=glyhb_star)) + geom_histogram() + labs(title="Spread of 'glyhb_star' Variable", x="log(glyhb)")
+
+#The distribution is much more symmetric after taking the log of the 'glyhb' variable. 
+```
+
+
+8.
+```{r}
+library(dplyr)
+diabetes_clean %>% group_by(weight) %>% summarise(mean.glyhb = mean(glyhb_star))
+diabetes_clean %>% group_by(age) %>% summarise(mean.glyhb = mean(glyhb_star))
+diabetes_clean %>% group_by(gender) %>% summarise(mean.glyhb = mean(glyhb_star))
+```
+Generally, as weight and age increase, the mean value of glyhb increases as well. There seems to be some type of positive relationship between weight and glyhb, and there also seems to be a similar relationship between age and glyhb. 
+
+For gender, the mean glyhb is slightly higher for males than females, but we cannot conclude that the difference is significant.
+
+
+10.
+```{r}
+trial = diabetes_clean %>% group_by(frame,location) %>% summarise (mean.glyhb_star= mean(glyhb_star))
+ggplot(trial,aes(x=frame, y=mean.glyhb_star, color=location)) + geom_point() + labs(title="Mean log(glyhb) by frame")
+```
+
+
+11.
+```{r}
+ggplot(diabetes_clean,aes(x=ratio, y=glyhb_star)) + geom_point() + labs(title="Ratio by log(glyhb)")
+ggplot(diabetes_clean,aes(x=bp.1s, y=glyhb_star)) + geom_point() + labs(title="Blood Pressure by log(glyhb)")
+ggplot(diabetes_clean,aes(x=age, y=glyhb_star)) + geom_point() + labs(title="Age by log(glyhb)")
+ggplot(diabetes_clean,aes(x=gender, y=glyhb_star)) + geom_boxplot() + labs(title="Gender by log(glyhb")
+ggplot(diabetes_clean,aes(x=hip, y=glyhb_star)) + geom_point() + labs(title="Hip Measurement (in) by log(glyhb)")
+ggplot(diabetes_clean,aes(x=weight, y=glyhb_star)) + geom_point() + labs(title="Weight by log(glyhb")
+```
+
+
+12.
+```{r}
+ggplot(diabetes_clean,aes(y=hip,x=waist,color=frame, shape=frame)) + geom_point() + labs(title="Hip vs Weight by Frame")
+ggplot(diabetes_clean,aes(y=hip,x=waist)) + geom_boxplot() + facet_wrap(~frame) + labs(title="Hip vs Weight by Frame")
+```
+
+
+Messy Data
+
+13. The gather function takes multiple columns and collapses them into key-value pairs. On the other hand, the spread function is used to spread a key-value pairs across multiple columns.
+
+
+14. The functions spread and gather are exact complements of one another because they perform the exact opposite purpose. One function performs one task, and the other function virtually reverses the effect of the original.
+
+
+Regression Models
