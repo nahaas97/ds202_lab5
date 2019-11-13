@@ -4,9 +4,12 @@ author: "Nathan Haas, Alex Beagle"
 date: "10/31/2019"
 output: html_document
 ---
-Owner's username: nahaas97
-Partner's username: abeagle15
-repo name: ds202_lab5
+Owner's username: nahaas97 ;  
+
+Partner's username: abeagle15 ;  
+
+repo name: ds202_lab5 ;  
+
 repo: https://github.com/nahaas97/ds202_lab5
 
 
@@ -116,25 +119,41 @@ Messy Data
 
 Regression Models
 
+
 15.
 ```{r}
 fit = lm(glyhb_star ~stab.glu + age + waist + ratio+ factor(frame),data=diabetes_clean)
  summary(fit)
- 
 ```
-
+All of the variables included in the model are statistically significant at the alpha=0.5 level, except for the frame medium and frame small variables due to their high p-value. With an adjusted R-squared value of 0.557, the linear regression model is not ideal, but it is better than not fitting any model; the F-statistic value backs this with a value of 77.49. Our exploratory analysis suggests that a linear regression model may not be the best model for this data. Looking at the plots we created above in number 11, the variables oin the diabetes dataset are not positively, linearly related as we expected. This may contribute to the adjusted R-squared value being lower than we'd like. With that being said, we don't know what model is ideal, but we know that some model is better than no model.
 
 
 16.
+With a one unit increase in the glyhb_star variable, there is an expected 0.0035 increase in stab.glu, 0.0034 increase in age, 0.0048 increase in waist, 0.0219 increase in ratio, 0.0309 increase in medium frame, and a 0.0132 increase in small frame. There is a small change in each variable per one unit increase in the glyhb_star.
+
 
 17.
+```{r}
+fit$fitted.values
+
+#These estimated fitted values are estimates of the true mean value of the glyhb_star when the linear model "fit" is used.
+
+answer = 0.0035182*90 + 0.0033632*35 + 0.0047925*30 + 0.0219341*5.1 + 0.0131840 + 0.8330897
+print(answer)
+
+#The answer we got was 1.536263, which is the estimated mean value of glyhb_star for a person with these statistics.
+```
+
 
 18.
 Regarding data, inference is essentially using a model to learn and infer about something like trends in the data, whereas prediction would be using a model to input new values and estimate the outputs resulting from it.
 
+
 19.  Linear regression is beneficial when dealing with something linear, but will not work well if the model is not linear.  It's also beneficial due to it being easy and simple to use, but falters in many real life scenarios due to many not being linear.  KNN is beneficial due to being non-parametric and can therefore be used when the model is non-linear. Some disadvantages are the long computing times and needing an accurate K value.
 
+
 Reflection
+
 
 20.
 As we have gotten deeper and deeper within data science, one thing that always continues to surprise me is the amount of data that is available and collected in the world.  Like in recent news, everyone is able to download their own google profile data, and we can see the insane amount of data that google has recorded of you.  One of the most challenging things we have faces was finding usefull ways to express the data in the most beneficial ways. For instance, we could be dealing with messy data that needs a ton of cleaning, and then having to find the right way to portray the data, whether it needs more modeling or using ggplots from the start. By far, the most satisfying thing is when everything comes together exactly the way we envision it.  Learning R from scratch has been a challenge for us, but we find that it is extremely gratifying when you finally work out the errors in the code as well as accurately portraying the information we were trying to convey.
