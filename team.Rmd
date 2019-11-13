@@ -130,9 +130,9 @@ fit = lm(glyhb_star ~stab.glu + age + waist + ratio+ factor(frame),data=diabetes
 17.
 
 18.
-Regarding data, inference is essentially learning how a model to learn and infer about something like trends in the data, whereas prediction would be using a model to input new values and estimate what the outputs resulting from it.
+Regarding data, inference is essentially using a model to learn and infer about something like trends in the data, whereas prediction would be using a model to input new values and estimate the outputs resulting from it.
 
-19.  Linear regression is beneficial when dealing with something linear, but will not work well if the model is not linear.  It's also beneficial due to it being easy and simple to use, but falters in many real life scenarios due to many not being linear.  KNN is beneficial due to being non-parametric and can therefore be used when the model is non-linear. Some disadvantages are the long computing times and needing an accurate K value\.
+19.  Linear regression is beneficial when dealing with something linear, but will not work well if the model is not linear.  It's also beneficial due to it being easy and simple to use, but falters in many real life scenarios due to many not being linear.  KNN is beneficial due to being non-parametric and can therefore be used when the model is non-linear. Some disadvantages are the long computing times and needing an accurate K value.
 
 Reflection
 
